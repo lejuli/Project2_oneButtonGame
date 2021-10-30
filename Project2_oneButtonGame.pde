@@ -4,24 +4,29 @@ int ballSize = 20;
 int ballColor = color(0);
 float gravity = 1;
 float ballSpeedVert = 0;
-float airfriction = 0.0001;
-float friction = 0.1;
 int racketBounceRate = 20;
 //pong
 float speed = 5;
+float xPos;
 float yPos;
-float racketWidth = 20;
 float boxHight = 90;
 float boxWidth = 20;
-float hyHeight = boxHight/2;
-void setup(){
+float hyHeight = boxWidth/2;
+float racketWidth = 100;
+float racketHeight = 10;
+PVector position;
+ boolean isTouched = false;
+float triggerDistance1 = 100;
+void setup() {
   size(800, 600, P2D);
   ballX=width/4;
   ballY=height/5;
-   yPos = height/2;
+  xPos = height/2;
+  yPos = width/1.5;
 }
-void draw(){
- if (gameScreen == 0) {
+void draw() {
+  background(125);
+  if (gameScreen == 0) {
     initScreen();
   } else if (gameScreen == 1) {
     gameScreen();
@@ -30,7 +35,7 @@ void draw(){
   }
 }
 void initScreen() {
-   background(0);
+  background(0);
   textAlign(CENTER);
   text("Click to start", height/2, width/2);
 }
@@ -39,30 +44,37 @@ void gameScreen() {
   drawBall();
   applyGravity();
   keepInScreen();
-   drawRacket();
+  drawRacket();
 }   
-void drawRacket(){
- rect(yPos, 580, boxHight, boxWidth);
-  
-  yPos += speed;
-  
+void drawBall() {
+  fill(ballColor);
+  ellipse(ballX, ballY, ballSize, ballSize);
+  ballX += speed;
+
   // keeps the paddle from leaving the window
-  if (yPos < hyHeight || yPos > width - hyHeight) speed *= -1;
+  if (ballX < hyHeight ||ballX > width - hyHeight) speed *= -1;
 }
+void drawRacket() {
+
+ // rect(xPos, yPos, boxHight, boxWidth);
+//  xPos += speed;
+
+  // keeps the paddle from leaving the window
+//  if (xPos < hyHeight || xPos > width - hyHeight) speed *= -1;
+  
+}
+
 void applyGravity() {
   ballSpeedVert += gravity;
   ballY += ballSpeedVert;
-  ballSpeedVert -= (ballSpeedVert * airfriction);
 }
 void makeBounceBottom(float surface) {
   ballY = surface-(ballSize/2);
   ballSpeedVert*=-1;
-  ballSpeedVert -= (ballSpeedVert * friction);
 }
 void makeBounceTop(float surface) {
   ballY = surface+(ballSize/2);
   ballSpeedVert*=-1;
-  ballSpeedVert -= (ballSpeedVert * friction);
 }
 // keep ball in the screen
 void keepInScreen() {
@@ -75,10 +87,7 @@ void keepInScreen() {
     makeBounceTop(0);
   }
 }
-void drawBall() {
-  fill(ballColor);
-  ellipse(ballX, ballY, ballSize, ballSize);
-}
+
 void gameOverScreen() {
   // codes for game over screen
 }
@@ -87,7 +96,7 @@ public void mousePressed() {
   if (gameScreen==0) {
     startGame();
   }
-  if (yPos >= hyHeight && yPos <= height - hyHeight) speed *= -1;
+  if (ballY >= hyHeight && ballY <= height - hyHeight) speed *= -1;
 }
 void startGame() {
   gameScreen=1;
