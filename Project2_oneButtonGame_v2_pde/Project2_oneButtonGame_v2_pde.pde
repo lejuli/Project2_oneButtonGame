@@ -43,8 +43,7 @@ void draw() {
   background(back);
   
   fill(0);
-  rectMode(CENTER);
-  rect(width/2, height/2, width, height * 0.6);
+  rectMode(CENTER);      
   
   for (Car car : cars) {
     car.run();
