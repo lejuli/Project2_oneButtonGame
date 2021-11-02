@@ -9,10 +9,10 @@ class Player {
   float yPos;
   float yHeight = 50;
   float hyHeight = yHeight/2;
-  PImage car;
+  PImage alien;
   Player() {
     init();
-    car= loadImage("car.png");
+    alien= loadImage("alien.png");
   }
 
   void init() {
@@ -26,7 +26,7 @@ class Player {
   }
 
   void moveForward() {
-    target.y -= movementStep;
+    
      if (yPos >= hyHeight && yPos <= height - hyHeight) speed *= -1;
   }
 
@@ -42,7 +42,7 @@ class Player {
     
     }
    
-    image(car, 100, yPos, 150, 60);
+    image(alien, 100, yPos, 120, 90);
     yPos += speed; 
     if (yPos < hyHeight || yPos > height - hyHeight) speed *= -1;
     if (debug) {
