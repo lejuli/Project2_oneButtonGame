@@ -1,4 +1,4 @@
-class Car {
+class Alien {
   
   boolean isLeft;
   PVector position, target;
@@ -7,9 +7,9 @@ class Car {
   float xMargin = 500;
   float yMargin = 150;
   boolean alive = true;
-  PImage enemycar;
+  PImage enemyalien;
   
-  Car() {
+  Alien() {
     float pickSide = random(1);
     float y = random(yMargin, height-yMargin);
     float x1, x2;
@@ -24,7 +24,7 @@ class Car {
     }
     position = new PVector(x1, y);  
     target = new PVector(x2, y);  
-    enemycar = loadImage("enemycar.png");
+    enemyalien = loadImage("enemyalien.png");
   }
   
   void update() {
@@ -35,7 +35,7 @@ class Car {
   void draw() {
     rectMode(CENTER);
     fill(col);
-    image(enemycar, position.x, position.y, 150, 40);
+    image(enemyalien, position.x, position.y, 150, 80);
     
     if (debug) {
       fill(debugColor);

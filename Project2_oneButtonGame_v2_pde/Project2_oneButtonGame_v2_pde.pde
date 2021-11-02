@@ -1,10 +1,10 @@
 Player player;
-ArrayList<Car> cars;
+ArrayList<Alien> aliens;
 
 int timeLimit = 60;
 int currentTime = 0;
 int markTime = 0;
-int carInterval = 1000;
+int alienInterval = 1000;
 float crashRange = 80;
 boolean debug = false;
 color debugColor = color(255, 127, 0);
@@ -23,9 +23,8 @@ void setup() {
   font = createFont("Arial", fontSize);
   textFont(font, fontSize);
   player = new Player();
-  cars = new ArrayList<Car>();
+  aliens = new ArrayList<Alien>();
    yPos = height/2;
-  rectMode(CENTER);
   back = loadImage("back.png");
 }
 
@@ -35,23 +34,20 @@ void draw() {
   int t = millis();
   currentTime = abs(timeLimit - int(t/1000));
   
-  if (t > markTime + carInterval) {
-    cars.add(new Car());
+  if (t > markTime + alienInterval) {
+    aliens.add(new Alien());
     markTime = t;
   }
   
   background(back);
-  
-  fill(0);
-  rectMode(CENTER);      
-  
-  for (Car car : cars) {
-    car.run();
+   
+  for (Alien alien : aliens) {
+    alien.run();
     if (debug) {
       stroke(debugColor);
-      line(car.position.x, car.position.y, player.position.x, player.position.y);
+      line(alien.position.x, alien.position.y, player.position.x, player.position.y);
     }
-    if (player.position.dist(car.position) < crashRange) player.alive = false;
+    if (player.position.dist(alien.position) < crashRange) player.alive = false;
   }
   
   player.run();
@@ -59,10 +55,10 @@ void draw() {
   fill(255);
   text(currentTime, 10, fontSize);
   
-  // clean up cars that have left the screen
-  for (int i=cars.size()-1; i>=0; i--) {
-    if (!cars.get(i).alive) {
-      cars.remove(i);
+ 
+  for (int i=aliens.size()-1; i>=0; i--) {
+    if (!aliens.get(i).alive) {
+      aliens.remove(i);
     }
   }
   
